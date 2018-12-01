@@ -1,9 +1,8 @@
 ﻿from bottle import route, run, request, abort, static_file
 
 from fsm import TocMachine
-PORT = 2002
-
 VERIFY_TOKEN = "Messenger_Chatbot"
+PORT = 2001
 
 machine = TocMachine(
     states=[
@@ -70,42 +69,6 @@ machine = TocMachine(
     show_conditions=True,
 )
 
-'''
-# state只能是state開頭
-machine = TocMachine(
-    states=[
-        'user',
-        'state1',
-        'state2',
-    ],
-    transitions=[
-        {
-            'trigger': 'advance',
-            'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1',
-        },
-        {
-            'trigger': 'advance',
-            'source': 'user',
-            'dest': 'state2',
-            'conditions': 'is_going_to_state2',
-        },
-        {
-            'trigger': 'go_back',
-            'source': [
-                'state1',
-                'state2',
-            ],
-            'dest': 'user',
-        }
-    ],
-    initial='user',
-    auto_transitions=False,
-    show_conditions=True,
-)
-'''
-
 @route("/webhook", method="GET")
 def setup_webhook():
     mode = request.GET.get("hub.mode")
@@ -130,15 +93,14 @@ def webhook_handler():
 
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
-        # nlp
         machine.advance(event)
         return 'OK'
     
 
 @route('/show-fsm', methods=['GET'])
 def show_fsm():
-    machine.get_graph().draw('my_fsm.png', prog='dot', format='png')
-    return static_file('fsm.png', root='./img/', mimetype='image/png')
+    machine.get_graph().draw('F14051172-fsm.png', prog='dot', format='png')
+    return static_file('F14051172-fsm.png', root='./', mimetype='image/png')
 
 
 if __name__ == "__main__":

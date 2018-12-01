@@ -1,6 +1,7 @@
 ﻿from transitions.extensions import GraphMachine
 
-from utils import send_text_message
+from nlp import nlp
+from utils import send_text_message, send_quick_reply
 
 # 只能有一個方向
 class TocMachine(GraphMachine):
@@ -12,38 +13,70 @@ class TocMachine(GraphMachine):
 
     def is_going_to_state11(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'go to state11' # 使用者打的字
+            # Try Except是為了分開收到文字還是貼圖
+            try:
+                text = nlp(event['message']['text'])
+                for text_tmp in text:
+                    if (text_tmp == '訂') or (text_tmp == '飲料') or (text_tmp == '菜餐') :
+                        return True
+                    
+                sender_id = event['sender']['id']
+                responese = send_quick_reply(sender_id)
+                #responese = send_text_message(sender_id, "請輸入\"我要訂飲料\"來觀看Menu!")
+            except:
+                sender_id = event['sender']['id']
+                responese = send_text_message(sender_id, "請傳送文字11")
+        
         return False
 
     def is_going_to_state12(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'go to state12'
+            try:
+                text = event['message']['text']
+                return text.lower() == 'go to state12'
+            except:
+                sender_id = event['sender']['id']
+                responese = send_text_message(sender_id, "請傳送文字12")
         return False
     
     def is_going_to_state13(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'go to state13'
+            try:
+                text = event['message']['text']
+                return text.lower() == 'go to state13'
+            except:
+                sender_id = event['sender']['id']
+                responese = send_text_message(sender_id, "請傳送文字13")
         return False
     
     def is_going_to_state21(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'go to state21'
+            try:
+                text = event['message']['text']
+                return text.lower() == 'go to state21'
+            except:
+                sender_id = event['sender']['id']
+                responese = send_text_message(sender_id, "請傳送文字21")
         return False
     
     def is_going_to_state31(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'go to state31'
+            try:
+                text = event['message']['text']
+                return text.lower() == 'go to state31'
+            except:
+                sender_id = event['sender']['id']
+                responese = send_text_message(sender_id, "請傳送文字31")
         return False
     
     def is_going_to_state32(self, event):
         if event.get("message"):
-            text = event['message']['text']
-            return text.lower() == 'go to state32'
+            try:
+                text = event['message']['text']
+                return text.lower() == 'go to state32'
+            except:
+                sender_id = event['sender']['id']
+                responese = send_text_message(sender_id, "請傳送文字32")
         return False
 
 
