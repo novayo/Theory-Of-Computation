@@ -1,7 +1,7 @@
 ﻿from transitions.extensions import GraphMachine
 
 from nlp import nlp
-from utils import send_text_message, send_quick_reply
+from utils import send_text_message, send_quick_reply, send_image_url, send_template_mesg
 
 # 只能有一個方向
 class TocMachine(GraphMachine):
@@ -21,7 +21,9 @@ class TocMachine(GraphMachine):
                         return True
                     
                 sender_id = event['sender']['id']
-                responese = send_quick_reply(sender_id)
+                #responese = send_quick_reply(sender_id)
+                #responese = send_image_url(sender_id, "https://i.imgur.com/HekR9G2.png")
+                responese = send_template_mesg(sender_id, "飲料菜單", "請選擇","https://i.imgur.com/HekR9G2.png", [{'type': 'postback','title': "組合A",'payload': '娛樂新聞'},{'type': 'postback','title': "組合B",'payload': '體育新聞'},{'type': 'postback','title': "組合C",'payload': '雞腿bang當'}])
                 #responese = send_text_message(sender_id, "請輸入\"我要訂飲料\"來觀看Menu!")
             except:
                 sender_id = event['sender']['id']
