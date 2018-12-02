@@ -2,7 +2,7 @@
 
 from fsm import TocMachine
 VERIFY_TOKEN = "Messenger_Chatbot"
-PORT = 2000
+PORT = 2003
 
 machine = TocMachine(
     states=[
@@ -12,7 +12,6 @@ machine = TocMachine(
         'state13',
         'state21',
         'state31',
-        'state32',
     ],
     transitions=[
         {
@@ -40,37 +39,22 @@ machine = TocMachine(
             'dest': 'state21',
             'conditions': 'is_going_to_state21',
         },
-        {
-            'trigger': 'advance',
-            'source': 'state21',
-            'dest': 'state11',
-            'conditions': 'is_going_to_state22',
-        },
-            
+                
         {
             'trigger': 'advance',
             'source': 'user',
             'dest': 'state31',
             'conditions': 'is_going_to_state31',
         },
+
         {
-            'trigger': 'advance',
-            'source': 'state31',
-            'dest': 'state32',
-            'conditions': 'is_going_to_state32',
-        },        
-        
-        {
-            'trigger': 'go_back',
-            'source': [ 
-                'state11',
-                'state12',
-                'state13',
+            'trigger':'go_back',
+            'source':[
                 'state21',
+                'state13',
                 'state31',
-                'state32',
             ],
-            'dest': 'user',
+            'dest':'user'
         }
     ],
     initial='user',

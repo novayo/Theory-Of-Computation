@@ -12,6 +12,7 @@ def send_text_message(id, text):
         "recipient": {"id": id},
         "message": {"text": text}
     }
+
     response = requests.post(url, json=payload)
 
     if response.status_code != 200:
@@ -54,20 +55,14 @@ def send_quick_reply(id):
             },
             {
                     "content_type":"text",
-                    "title":"點我加購",
+                    "title":"點我看菜單",
                     "payload":"???",
             },
             {
                     "content_type":"text",
-                    "title":"點我看訂單",
+                    "title":"點我給評論",
                     "payload":"???",
             },
-            {
-                    "content_type":"text",
-                    "title":"離開",
-                    "payload":"???",
-            },
-
             ]
         }
     }
@@ -138,7 +133,6 @@ def send_receipt_mesg(id, name, order_number, payment_method, element):
                         "state": "台灣",
                         "country": "台灣"
                     },
-                            ###################################################
                     "summary": {
                         "subtotal": price, #小計
                         "shipping_cost": 0, #手續費
@@ -155,7 +149,42 @@ def send_receipt_mesg(id, name, order_number, payment_method, element):
         print("Unable to send message: " + response.text)
     return response
 
-"""
-def send_button_message(id, text, buttons):
-    pass
-"""
+
+def send_button_message(id, text, buttons, u=0):
+    url = "{0}/me/messages?access_token={1}".format(GRAPH_URL, ACCESS_TOKEN)
+    if u == 0:
+        payload = {
+            "recipient":{
+                "id":id
+            },
+            "message":{
+                "attachment":{
+                    "type":"template",
+                    "payload":{
+                        "template_type":"button",
+                        "text":text, # 傳送文字
+                        "buttons":buttons
+                    }
+                }
+            }
+        }
+    else:
+        payload = {
+            "recipient":{"id":id},
+            "message":{
+                "attachment":{
+                    "type":"template",
+                    "payload":{
+                        "template_type":"button",
+                        "text":text,
+                        "buttons":buttons
+                    }
+                }
+            }
+        }
+                
+    response = requests.post(url, json=payload)
+    if response.status_code != 200:
+        print("Unable to send message: " + response.text)
+    return response
+

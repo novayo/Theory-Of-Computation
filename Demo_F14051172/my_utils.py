@@ -1,4 +1,5 @@
 import jieba
+import time
 
 def nlp(text):
     seg_msg = jieba.cut(text)
@@ -20,3 +21,9 @@ def find_slash(text):
         return 1
     
     return 2
+
+def seller_check():
+    #有機會設計一個假的server來確認買家有來領東西
+    time.sleep(5)
+    print("收到賣方訊息")
+    return True
