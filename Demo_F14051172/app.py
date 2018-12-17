@@ -1,8 +1,11 @@
 ﻿from bottle import route, run, request, abort, static_file
-
+import redis
+import os
 from fsm import TocMachine
-VERIFY_TOKEN = "Messenger_Chatbot"
-PORT = 2003
+VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
+PORT = 2001
+pool = redis.ConnectionPool(host='localhost', port=6379, decode_responses=True)
+r = redis.Redis(connection_pool=pool)
 
 machine = TocMachine(
     states=[
@@ -46,6 +49,11 @@ machine = TocMachine(
             'dest': 'state31',
             'conditions': 'is_going_to_state31',
         },
+        {
+            'trigger': 'advance',
+            'source':'state11',
+            'dest': 'user',
+        },
 
         {
             'trigger':'go_back',
@@ -68,6 +76,7 @@ def setup_webhook():
     token = request.GET.get("hub.verify_token")
     challenge = request.GET.get("hub.challenge")
 
+    print(VERIFY_TOKEN)
     if mode == "subscribe" and token == VERIFY_TOKEN:
         print("WEBHOOK_VERIFIED")
         return challenge
@@ -86,9 +95,18 @@ def webhook_handler():
 
     if body['object'] == "page":
         event = body['entry'][0]['messaging'][0]
-        machine.advance(event)
-        return 'OK'
-    
+        try:
+            if (r.get(event['sender']['id']) == None):
+                r.set(event['sender']['id'], machine.state)
+            machine.state = r.get(event['sender']['id'])
+            print(machine.state)
+            machine.advance(event)
+            r.set(event['sender']['id'], machine.state)
+            return 'OK'
+        except:
+            responese = send_text_message(event['sender']['id'], "目前伺服器故障中，請稍後!")
+            return 'OK'
+            
 
 @route('/show-fsm', methods=['GET'])
 def show_fsm():

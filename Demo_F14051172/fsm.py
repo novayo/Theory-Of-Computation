@@ -54,6 +54,10 @@ class TocMachine(GraphMachine):
             #判斷是否輸入格式正確與否
             try:
                 text = event['message']['text']
+                if (text == '離開'):
+                    self.initial_all_vars()
+                    responese = send_text_message(event['sender']['id'], "歡迎您再次光臨!")
+                    return False
                 #若找到空格(則輸入了收件人了)
                 if (self.if_ordered == 1) and (text.find(' ') != -1):
                     tmptext = text.split(' ', 1)
@@ -69,7 +73,7 @@ class TocMachine(GraphMachine):
                     #先確認是否有1個或2個/
                     text_split = find_slash(text)
                     if text_split == -1:
-                        responese = send_text_message(event['sender']['id'], "格式錯誤!\n請重新輸入這筆資料!")
+                        responese = send_text_message(event['sender']['id'], "格式錯誤!\n請重新輸入這筆資料!\n\n[輸入\"離開\"以離開聊天室]")
                         return False #go_back()
                     else:
                         self.if_ordered = 1
@@ -144,7 +148,7 @@ class TocMachine(GraphMachine):
         if self.if_see_menu == 0: 
             responese = send_image_url(event['sender']['id'], "http://bit.ly/菜單-F14051172")
             self.if_see_menu = 1
-        responese = send_text_message(event['sender']['id'], "請以以下格式回復 : \n飲料/杯數/附註\n\n\n[附註若未標示糖冰則以正常糖冰為主!]")
+        responese = send_text_message(event['sender']['id'], "請以以下格式回復 : \n飲料/杯數/附註\n\n\n[附註若未標示糖冰則以正常糖冰為主! \n輸入\"離開\"以離開聊天室]")
         
     def on_enter_state12(self, event):
         responese = send_text_message(event['sender']['id'], "訂單形成中請稍後...")
