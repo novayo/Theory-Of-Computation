@@ -1,0 +1,27 @@
+[
+  {
+    "title": "美式咖啡",
+    "price": "30",
+    "image_url":"http://bit.ly/美式咖啡-F14051172"
+  },
+  {
+    "title": "抹茶拿鐵",
+    "price": "40",
+    "image_url":"http://bit.ly/抹茶拿鐵-F14051172"
+  },
+  {
+    "title": "奶蓋綠",
+    "price": "50",
+    "image_url":"http://bit.ly/奶蓋綠-F14051172"
+  },
+  {
+    "title": "珍珠奶茶",
+    "price": "60",
+    "image_url":"http://bit.ly/珍珠奶茶-F14051172"
+  },
+  {
+    "title": "巧克力可可碎片",
+    "price": "70",
+    "image_url":"http://bit.ly/巧克力可可碎片-F14051172"
+  }
+]
