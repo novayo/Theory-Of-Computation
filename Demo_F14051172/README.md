@@ -1,63 +1,18 @@
-# TOC Project 2019
-
-Template Code for TOC Project 2019
-
-A Facebook messenger bot based on a finite state machine
-
-More details in the [Slides](https://hackmd.io/p/SkpBR-Yam#/)
-
-## Setup
-
-### Prerequisite
-* Python 3
-* Facebook Page and App
-* HTTPS Server
-
-#### Install Dependency
-```sh
-pip install -r requirements.txt
-```
-
-* pygraphviz (For visualizing Finite State Machine)
-    * [Setup pygraphviz on Ubuntu](http://www.jianshu.com/p/a3da7ecc5303)
-
-#### Secret Data
-
-`VERIFY_TOKEN` and `ACCESS_TOKEN` **MUST** be set to proper values.
-Otherwise, you might not be able to run your code.
-
-#### Run Locally
-You can either setup https server or using `ngrok` as a proxy.
-
-**`ngrok` would be used in the following instruction**
-
-```sh
-./ngrok http 5000
-```
-
-After that, `ngrok` would generate a https URL.
-
-#### Run the sever
-
-```sh
-python3 app.py
-```
-
-## Finite State Machine
-![fsm](./img/show-fsm.png)
-
-## Usage
-The initial state is set to `user`.
-
-Every time `user` state is triggered to `advance` to another state, it will `go_back` to `user` state after the bot replies corresponding message.
-
-* user
-	* Input: "go to state1"
-		* Reply: "I'm entering state1"
-
-	* Input: "go to state2"
-		* Reply: "I'm entering state2"
-
-
-## Reference
-[TOC-Project-2017](https://github.com/Lee-W/TOC-Project-2017) ❤️ [@Lee-W](https://github.com/Lee-W)
+﻿# **[我的FB粉絲團](https://www.facebook.com/%E7%B7%9A%E4%B8%8A%E8%A8%82%E8%B3%BC%E9%A3%B2%E6%96%99%E5%B9%B3%E5%8F%B0-1986065674805738/?modal=admin_todo_tour)**
+* How To Run:
+	>   * 如果使用local端測試，因為有下載redis，故需要先執行[redis伺服器](https://segmentfault.com/q/1010000003813743)(參考最下方回答建立伺服器) (記得先執行redis-server.exe再執行redis-ci.exe)
+	>   * 需額外下載redis, jieba (執行pip install redis, jieba即可)
+	
+* How To Interact With My Chatbot:
+	>   * 一開始隨扁輸入文字開啟對話
+	>   * 接著會出現三個選項 "點我訂飲料" "點我看菜單" "點我給評論"
+	>   * 點我看菜單: 
+	>       * 點下去之後會傳給你菜單，回傳此格式以訂餐: "飲料/杯數/備註"
+	>		    * 舉例1: 美式咖啡/1/半糖少冰 ; 舉例2: 抹茶拿鐵/3
+	>		* 訂完飲料之後，回傳此格式以看訂單: "人名 到店付款" -> (記得中間有空格)
+	>		    * 舉例1: 施崇祐 到店付款
+	>		* 點開菜單則可以觀看你剛剛訂的飲料，並按下"我已付款並取餐"的按鈕，並等10秒 (模擬到飲料店現場的情況，有用sleep(10)去等)，之後完成此分支
+	>    * 點我看菜單
+	>        * 點下去之後，會傳給你菜單的網址，可以點進去放大來看
+	>    * 點我給評論
+	>        * 點下去之後，會傳給你評論粉絲團的網址，點下去則重新導向網址

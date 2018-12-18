@@ -3,7 +3,7 @@ import redis
 import os
 from fsm import TocMachine
 VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
-PORT = 2001
+PORT = 2002
 pool = redis.ConnectionPool(host='localhost', port=6379, decode_responses=True)
 r = redis.Redis(connection_pool=pool)
 
@@ -99,7 +99,6 @@ def webhook_handler():
             if (r.get(event['sender']['id']) == None):
                 r.set(event['sender']['id'], machine.state)
             machine.state = r.get(event['sender']['id'])
-            print(machine.state)
             machine.advance(event)
             r.set(event['sender']['id'], machine.state)
             return 'OK'
