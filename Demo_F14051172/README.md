@@ -2,6 +2,7 @@
 * How To Run:
 	>   * 如果使用local端測試，因為有下載redis，故需要先執行[redis伺服器](https://segmentfault.com/q/1010000003813743)(參考最下方回答建立伺服器) (記得先執行redis-server.exe再執行redis-ci.exe)
 	>   * 需額外下載redis, jieba (執行pip install redis, jieba即可)
+	>   * 直接運行python app.py即可
 	
 * How To Interact With My Chatbot:
 	>   * 一開始隨扁輸入文字開啟對話
