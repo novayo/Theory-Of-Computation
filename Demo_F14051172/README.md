@@ -1,5 +1,8 @@
 ﻿# **[我的FB粉絲團](https://www.facebook.com/%E7%B7%9A%E4%B8%8A%E8%A8%82%E8%B3%BC%E9%A3%B2%E6%96%99%E5%B9%B3%E5%8F%B0-1986065674805738/?modal=admin_todo_tour)**
  ---
+* FSM
+![](https://i.imgur.com/rdAmGXQ.png)
+---
 * How To Run:
 	>   * 如果使用local端測試，因為有下載redis，故需要先執行[redis伺服器](https://segmentfault.com/q/1010000003813743)(參考最下方回答建立伺服器) (記得先執行redis-server.exe再執行redis-ci.exe)
 	>   * 需額外下載redis, jieba (執行pip install redis, jieba即可)
